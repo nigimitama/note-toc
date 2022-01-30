@@ -1,4 +1,5 @@
 function addIds() {
+  // tocbotを機能させるためにhタグにidを付与する
   let h1tags = document.getElementsByTagName("h1");
   let h2tags = document.getElementsByTagName("h2");
   let h3tags = document.getElementsByTagName("h3");
@@ -17,6 +18,7 @@ function addIds() {
 
 
 function addTocElements() {
+  // ToCが生成されるnavタグの追加
   if (document.getElementById('js-toc') === null) {
     let nav = document.createElement('nav');
     nav.classList.add('js-toc');
@@ -26,6 +28,7 @@ function addTocElements() {
     let body = document.getElementsByTagName("body")[0];
     body.append(nav);
   }
+  // ToCを生成するためにhタグを探索する対象を指定する
   let article = document.getElementsByClassName("p-article__content")[0];
   if (!article.classList.contains('js-toc-content')) {
     article.classList.add('js-toc-content');
@@ -35,7 +38,6 @@ function addTocElements() {
 
 function initTocbot() {
   tocbot.init({
-    headingsOffset: 60,
     scrollSmoothOffset: -128,
     hasInnerContainers: true,
   });
@@ -65,10 +67,7 @@ function main() {
 
   addIds();
   addTocElements();
-  tocbot.init({
-    scrollSmoothOffset: -128,
-    hasInnerContainers: true,
-  });
+  initTocbot();
 
   // componentsが更新されて変更したDocがもとに戻される事があるので以下で対応
   window.addEventListener('scroll', function(){
