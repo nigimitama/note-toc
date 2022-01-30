@@ -8,7 +8,8 @@
       "matches": ["https://note.com/*"],
       "run_at": "document_end",
       "css": [
-        "tocbot.css"
+        "tocbot.css",
+        "style.css"
       ],
       "js": [
         "tocbot.min.js",
