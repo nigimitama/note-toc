@@ -8,13 +8,16 @@
       "matches": ["https://note.com/*"],
       "run_at": "document_end",
       "css": [
-        "tocbot.css",
-        "style.css"
+        "src/tocbot.css",
+        "src/style.css"
       ],
       "js": [
-        "tocbot.min.js",
-        "content-script.js"
+        "src/tocbot.min.js",
+        "src/content-script.js"
       ]
     }
-  ]
+  ],
+  "icons": {
+    "128": "images/icon.png"
+  }
 }
