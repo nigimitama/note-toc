@@ -1,0 +1,19 @@
+{
+  "name": "note toc",
+  "description": "a google chrome extension to add table of contents to articles of note.com",
+  "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": ["https://note.com/*"],
+      "run_at": "document_end",
+      "css": [
+        "tocbot.css"
+      ],
+      "js": [
+        "tocbot.min.js",
+        "content-script.js"
+      ]
+    }
+  ]
+}
