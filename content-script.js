@@ -17,9 +17,8 @@ function addToc() {
 }
 
 function main() {
-  console.log('main');
   widen();
-  addToc();
+  // addToc();
 }
 
 
