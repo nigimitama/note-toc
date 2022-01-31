@@ -62,7 +62,7 @@ function changeLayout() {
 }
 
 
-function main() {
+function mainProcess() {
   changeLayout();
 
   addIds();
@@ -74,6 +74,11 @@ function main() {
     addIds();
     addTocElements();
   });
+}
+
+
+function main() {
+  mainProcess()
 }
 
 
