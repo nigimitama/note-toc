@@ -1,7 +1,7 @@
 {
   "name": "note toc",
-  "description": "a google chrome extension to add a table of contents to articles of note.com",
-  "version": "0.9.1",
+  "description": "Add a table of contents to articles of note.com",
+  "version": "0.1.0",
   "manifest_version": 3,
   "content_scripts": [
     {
