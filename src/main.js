@@ -1,3 +1,25 @@
+function changeLayout() {
+  // mainを左に寄せる
+  let main = document.getElementsByTagName("main")[0];
+  main.style.marginRight = '22%';
+
+  // 記事の幅を広げる
+  let articleBody = document.getElementsByClassName("p-article__body")[0];
+  if (articleBody) {
+    articleBody.style.width = '90%';
+    articleBody.style.marginLeft = 'auto';
+  }
+
+  // ヘッダー画像はもとのサイズのままにする
+  let figure = document.getElementsByClassName('o-noteEyecatch')[0];
+  if (figure) {
+    figure.style.width = '620px';
+    figure.style.marginLeft = 'auto';
+    figure.style.marginRight = 'auto';
+  }
+}
+
+
 function addIds() {
   // tocbotを機能させるためにhタグにidを付与する
   let h1tags = document.getElementsByTagName("h1");
@@ -54,28 +76,6 @@ function initTocbot() {
 }
 
 
-function changeLayout() {
-  // mainを左に寄せる
-  let main = document.getElementsByTagName("main")[0];
-  main.style.marginRight = '22%';
-
-  // 記事の幅を広げる
-  let articleBody = document.getElementsByClassName("p-article__body")[0];
-  if (articleBody) {
-    articleBody.style.width = '90%';
-    articleBody.style.marginLeft = 'auto';
-  }
-
-  // ヘッダー画像はもとのサイズのままにする
-  let figure = document.getElementsByClassName('o-noteEyecatch')[0];
-  if (figure) {
-    figure.style.width = '620px';
-    figure.style.marginLeft = 'auto';
-    figure.style.marginRight = 'auto';
-  }
-}
-
-
 function mainProcess() {
   const articleBodies = document.getElementsByClassName("p-article__body");
   const isArticlePage = (articleBodies.length > 0);
@@ -87,10 +87,21 @@ function mainProcess() {
   } else {
     removeTocElements();
   }
+}
 
-  // componentsが更新されて変更したDocがもとに戻される事があるので以下で対応
-  window.addEventListener('scroll', function(){
-    addIds();
-    addTocElements();
+
+function main() {
+  mainProcess();
+
+  // ページ遷移がDOMの変化として行われるため、DOMの変化を検知して再実行する
+  const target = document.getElementById('__nuxt');
+  const observer = new MutationObserver(records => {
+    mainProcess();
+  });
+  observer.observe(target, {
+    subtree: true,
+    childList: true
   });
 }
+
+main();
