@@ -25,8 +25,9 @@ function addIds() {
   let h1tags = document.getElementsByTagName("h1");
   let h2tags = document.getElementsByTagName("h2");
   let h3tags = document.getElementsByTagName("h3");
-  let hntags = [h1tags, h2tags, h3tags];
-  var j;
+  let h4tags = document.getElementsByTagName("h4");
+  let hntags = [h1tags, h2tags, h3tags, h4tags];
+  let j;
   Array.prototype.forEach.call(hntags, function(htags, i) {
     j = 0;
     Array.prototype.forEach.call(htags, function(tag) {
@@ -72,6 +73,7 @@ function initTocbot() {
   tocbot.init({
     scrollSmoothOffset: -128,
     hasInnerContainers: true,
+    collapseDepth: 1,
   });
 }
 
