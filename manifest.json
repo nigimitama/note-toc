@@ -16,9 +16,21 @@
       ],
       "js": [
         "src/tocbot.min.js",
-        "src/content-script.js"
+        "src/modules.js"
       ]
     }
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": [
+    "tabs",
+    "scripting",
+    "background"
+  ],
+  "host_permissions": [
+    "https://note.com/*",
+    "https://note.jp/*"
   ],
   "icons": {
     "16": "icons/icon16.png",
