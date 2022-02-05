@@ -30,8 +30,18 @@ function addTocElements() {
   }
   // ToCを生成するためにhタグを探索する対象を指定する
   let article = document.getElementsByClassName("p-article__content")[0];
-  if (!article.classList.contains('js-toc-content')) {
-    article.classList.add('js-toc-content');
+  if (article) {
+    if (!article.classList.contains('js-toc-content')) {
+      article.classList.add('js-toc-content');
+    }
+  }
+}
+
+
+function removeTocElements() {
+  var toc = document.getElementById('js-toc');
+  if (toc !== null) {
+    toc.remove();
   }
 }
 
@@ -51,23 +61,32 @@ function changeLayout() {
 
   // 記事の幅を広げる
   let articleBody = document.getElementsByClassName("p-article__body")[0];
-  articleBody.style.width = '90%';
-  articleBody.style.marginLeft = 'auto';
+  if (articleBody) {
+    articleBody.style.width = '90%';
+    articleBody.style.marginLeft = 'auto';
+  }
 
   // ヘッダー画像はもとのサイズのままにする
   let figure = document.getElementsByClassName('o-noteEyecatch')[0];
-  figure.style.width = '620px';
-  figure.style.marginLeft = 'auto';
-  figure.style.marginRight = 'auto';
+  if (figure) {
+    figure.style.width = '620px';
+    figure.style.marginLeft = 'auto';
+    figure.style.marginRight = 'auto';
+  }
 }
 
 
 function mainProcess() {
-  changeLayout();
-
-  addIds();
-  addTocElements();
-  initTocbot();
+  const articleBodies = document.getElementsByClassName("p-article__body");
+  const isArticlePage = (articleBodies.length > 0);
+  if (isArticlePage) {
+    changeLayout();
+    addIds();
+    addTocElements();
+    initTocbot();
+  } else {
+    removeTocElements();
+  }
 
   // componentsが更新されて変更したDocがもとに戻される事があるので以下で対応
   window.addEventListener('scroll', function(){
@@ -75,11 +94,3 @@ function mainProcess() {
     addTocElements();
   });
 }
-
-
-function main() {
-  mainProcess()
-}
-
-
-main();
