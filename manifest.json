@@ -1,6 +1,6 @@
 {
   "name": "note toc",
-  "description": "Add a table of contents to articles of note.com",
+  "description": "note.comの記事の右側に目次を追加します。",
   "version": "0.1.0",
   "manifest_version": 3,
   "content_scripts": [
