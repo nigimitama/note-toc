@@ -46,8 +46,6 @@ function addTocElements() {
     let nav = document.createElement('nav');
     nav.classList.add('js-toc');
     nav.id = 'js-toc';
-    nav.style.marginLeft = 'auto';
-    nav.style.width = '20%';
     let body = document.getElementsByTagName("body")[0];
     body.append(nav);
   }
@@ -73,8 +71,19 @@ function initTocbot() {
   tocbot.init({
     scrollSmoothOffset: -128,
     hasInnerContainers: true,
-    collapseDepth: 1,
+    collapseDepth: 6,
   });
+}
+
+function changeTocScrollability() {
+  // ウィンドウの縦幅よりもToCが大きければスクロール可能にする
+  const offset = 128;
+  var windowHeight = window.innerHeight - offset;
+  var nav = document.getElementById('js-toc');
+  var ol = document.querySelector("#js-toc > ol");
+  if (windowHeight < ol.clientHeight) {
+    nav.style.overflowY = 'auto';
+  }
 }
 
 
@@ -86,6 +95,7 @@ function mainProcess() {
     addIds();
     addTocElements();
     initTocbot();
+    changeTocScrollability();
   } else {
     removeTocElements();
   }
