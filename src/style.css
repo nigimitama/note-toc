@@ -1,8 +1,10 @@
 nav.js-toc {
   float: right;
-  max-width: 20%;
+  width: 20%;
   position: fixed;
   padding: 1em;
   top: 124px;
   right: 2em;
+
+  margin-left: auto; /* 右寄せにする */
 }
