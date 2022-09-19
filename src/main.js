@@ -6,8 +6,8 @@ function changeLayout() {
   // 記事の幅を広げる
   let articleBody = document.getElementsByClassName("p-article__body")[0];
   if (articleBody) {
-    articleBody.style.width = '90%';
-    articleBody.style.marginLeft = 'auto';
+    articleBody.style.width = '80%';
+    articleBody.style.marginLeft = '250px';
   }
 
   // ヘッダー画像はもとのサイズのままにする
