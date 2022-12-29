@@ -7,7 +7,7 @@ function changeLayout() {
   let articleBody = document.getElementsByClassName("p-article__body")[0];
   if (articleBody) {
     articleBody.style.width = '80%';
-    articleBody.style.marginLeft = '250px';
+    articleBody.style.marginLeft = '15%';
   }
 
   // ヘッダー画像はもとのサイズのままにする
