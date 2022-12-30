@@ -129,11 +129,13 @@ function mainProcess() {
 
 function updateLayout() {
   const articleBodies = document.getElementsByClassName("p-article__body");
-  const isArticlePage = (articleBodies.length > 0);
+  const isNotArticlePage = (articleBodies.length == 0);
+  if (isNotArticlePage) return null
+
   const body = document.getElementsByTagName("body")[0];
   const hasBodyEnoughWidth = (body.clientWidth > 921);
   let toc = document.getElementById(TOC_ID);
-  if (isArticlePage && hasBodyEnoughWidth) {
+  if (hasBodyEnoughWidth) {
     toc.hidden = false;
     changeLayout();
   } else {
