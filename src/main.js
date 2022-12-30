@@ -4,14 +4,14 @@ function changeLayout() {
   // 記事の幅を広げ、左右にマージンをとる
   let articleBody = document.getElementsByClassName("p-article__body")[0];
   if (articleBody) {
+    const padding = 48;
     const marginLeftPx = calcMarginLeft();
     const marginRightPx = calcMarginRight();
-    articleBody.style.marginLeft = `${marginLeftPx}px`;
-    articleBody.style.marginRight = `${marginRightPx}px`;
+    articleBody.style.marginLeft = `${marginLeftPx + padding}px`;
+    articleBody.style.marginRight = `${marginRightPx + padding}px`;
 
     const body = document.getElementsByTagName("body")[0];
-    const padding = 32 * 2;
-    const articleWidth = body.clientWidth - marginLeftPx - marginRightPx - padding;
+    const articleWidth = body.clientWidth - marginLeftPx - marginRightPx - padding * 2;
     articleBody.style.width = `${articleWidth}px`;
   }
 
