@@ -1,13 +1,19 @@
-function changeLayout() {
-  // mainを左に寄せる
-  let main = document.getElementsByTagName("main")[0];
-  main.style.marginRight = '22%';
+const TOC_ID = 'js-toc';
 
-  // 記事の幅を広げる
+
+function changeLayout() {
+  // 記事の幅を広げ、左右にマージンをとる
   let articleBody = document.getElementsByClassName("p-article__body")[0];
   if (articleBody) {
-    articleBody.style.width = '80%';
-    articleBody.style.marginLeft = '250px';
+    const marginLeftPx = calcMarginLeft();
+    const marginRightPx = calcMarginRight();
+    articleBody.style.marginLeft = `${marginLeftPx}px`;
+    articleBody.style.marginRight = `${marginRightPx}px`;
+
+    const body = document.getElementsByTagName("body")[0];
+    const padding = 32 * 2;
+    const articleWidth = body.clientWidth - marginLeftPx - marginRightPx - padding;
+    articleBody.style.width = `${articleWidth}px`;
   }
 
   // ヘッダー画像はもとのサイズのままにする
@@ -17,6 +23,24 @@ function changeLayout() {
     figure.style.marginLeft = 'auto';
     figure.style.marginRight = 'auto';
   }
+}
+
+
+function calcMarginRight() {
+  // articleの右側の余白を追加するToCに合わせる
+  const toc = document.getElementById(TOC_ID);
+  const rightPadding = 16 * Number(toc.style["right"].replace("em", ""));
+  const tocWidth = toc.clientWidth + rightPadding;
+  const minMargin = 150;
+  return Math.max(tocWidth, minMargin);
+}
+
+
+function calcMarginLeft() {
+  // articleの左側の余白は筆者のプロフィール欄に合わせる
+  const sideInfo = document.getElementsByClassName('p-article__sideCreatorInfo')[0];
+  const minMargin = 100;
+  return Math.max(sideInfo.clientWidth, minMargin);
 }
 
 
@@ -42,10 +66,11 @@ function addIds() {
 
 function addTocElements() {
   // ToCが生成されるnavタグの追加
-  if (document.getElementById('js-toc') === null) {
+  if (document.getElementById(TOC_ID) === null) {
     let nav = document.createElement('nav');
-    nav.classList.add('js-toc');
-    nav.id = 'js-toc';
+    nav.classList.add(TOC_ID);
+    nav.id = TOC_ID;
+    nav.style["right"] = "2em";
     let body = document.getElementsByTagName("body")[0];
     body.append(nav);
   }
@@ -60,7 +85,7 @@ function addTocElements() {
 
 
 function removeTocElements() {
-  var toc = document.getElementById('js-toc');
+  let toc = document.getElementById(TOC_ID);
   if (toc !== null) {
     toc.remove();
   }
@@ -78,9 +103,9 @@ function initTocbot() {
 function changeTocScrollability() {
   // ウィンドウの縦幅よりもToCが大きければスクロール可能にする
   const offset = 128;
-  var windowHeight = window.innerHeight - offset;
-  var nav = document.getElementById('js-toc');
-  var ol = document.querySelector("#js-toc > ol");
+  let windowHeight = window.innerHeight - offset;
+  let nav = document.getElementById(TOC_ID);
+  let ol = document.querySelector(`#${TOC_ID} > ol`);
   if (windowHeight < ol.clientHeight) {
     nav.style.overflowY = 'auto';
   }
@@ -91,13 +116,28 @@ function mainProcess() {
   const articleBodies = document.getElementsByClassName("p-article__body");
   const isArticlePage = (articleBodies.length > 0);
   if (isArticlePage) {
-    changeLayout();
     addIds();
     addTocElements();
     initTocbot();
     changeTocScrollability();
+    changeLayout();
   } else {
     removeTocElements();
+  }
+}
+
+
+function updateLayout() {
+  const articleBodies = document.getElementsByClassName("p-article__body");
+  const isArticlePage = (articleBodies.length > 0);
+  const body = document.getElementsByTagName("body")[0];
+  const hasBodyEnoughWidth = (body.clientWidth > 921);
+  let toc = document.getElementById(TOC_ID);
+  if (isArticlePage && hasBodyEnoughWidth) {
+    toc.hidden = false;
+    changeLayout();
+  } else {
+    toc.hidden = true;
   }
 }
 
@@ -107,10 +147,16 @@ function main() {
 
   // ページ遷移がDOMの変化として行われるため、DOMの変化を検知して再実行する
   const target = document.getElementById('__nuxt');
-  const observer = new MutationObserver(records => {
-    mainProcess();
-  });
+  const observer = new MutationObserver(mainProcess);
   observer.observe(target, {
+    subtree: true,
+    childList: true
+  });
+
+  // ウィンドウのリサイズに応じてnote側のレイアウトが変わるので対応する
+  const body = document.getElementsByTagName("body")[0];
+  const resizeObserver = new ResizeObserver(updateLayout);
+  resizeObserver.observe(body, {
     subtree: true,
     childList: true
   });
