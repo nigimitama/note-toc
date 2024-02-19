@@ -1,5 +1,5 @@
 {
-  "name": "note toc",
+  "name": "note 目次追加",
   "description": "note.comの記事の右側に目次を追加します。",
   "version": "0.1.4",
   "manifest_version": 3,
