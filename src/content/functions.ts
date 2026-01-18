@@ -3,7 +3,9 @@ const TOC_ID = "js-toc";
 
 function changeLayout() {
   // 記事の幅を広げ、左右にマージンをとる
-  let articleBody = document.getElementsByClassName("p-article__body")[0];
+  const articleBody = document.getElementsByClassName(
+    "p-article__body",
+  )[0] as HTMLElement | undefined;
   if (articleBody) {
     const padding = 48;
     const marginLeftPx = calcMarginLeft();
@@ -18,7 +20,9 @@ function changeLayout() {
   }
 
   // ヘッダー画像はもとのサイズのままにする
-  let figure = document.getElementsByClassName("o-noteEyecatch")[0];
+  const figure = document.getElementsByClassName(
+    "o-noteEyecatch",
+  )[0] as HTMLElement | undefined;
   if (figure) {
     figure.style.width = "620px";
     figure.style.marginLeft = "auto";
@@ -29,7 +33,8 @@ function changeLayout() {
 function calcMarginRight() {
   // articleの右側の余白を追加するToCに合わせる
   const toc = document.getElementById(TOC_ID);
-  const rightPadding = 16 * Number(toc.style["right"].replace("em", ""));
+  if (!toc) return 150;
+  const rightPadding = 16 * Number(toc.style.right.replace("em", ""));
   const tocWidth = toc.clientWidth + rightPadding;
   const minMargin = 150;
   return Math.max(tocWidth, minMargin);
@@ -39,22 +44,22 @@ function calcMarginLeft() {
   // articleの左側の余白は筆者のプロフィール欄に合わせる
   const sideInfo = document.getElementsByClassName(
     "p-article__sideCreatorInfo",
-  )[0];
+  )[0] as HTMLElement | undefined;
   const minMargin = 100;
-  return Math.max(sideInfo.clientWidth, minMargin);
+  return Math.max(sideInfo?.clientWidth ?? 0, minMargin);
 }
 
 function addIds() {
   // tocbotを機能させるためにhタグにidを付与する
-  let h1tags = document.getElementsByTagName("h1");
-  let h2tags = document.getElementsByTagName("h2");
-  let h3tags = document.getElementsByTagName("h3");
-  let h4tags = document.getElementsByTagName("h4");
-  let hntags = [h1tags, h2tags, h3tags, h4tags];
-  let j;
-  Array.prototype.forEach.call(hntags, function (htags, i) {
+  const h1tags = document.getElementsByTagName("h1");
+  const h2tags = document.getElementsByTagName("h2");
+  const h3tags = document.getElementsByTagName("h3");
+  const h4tags = document.getElementsByTagName("h4");
+  const hntags = [h1tags, h2tags, h3tags, h4tags];
+  let j: number;
+  Array.prototype.forEach.call(hntags, function (htags, i: number) {
     j = 0;
-    Array.prototype.forEach.call(htags, function (tag) {
+    Array.prototype.forEach.call(htags, function (tag: HTMLElement) {
       if (tag.id === "") {
         tag.id = `h${i}-${j}`;
         j += 1;
@@ -96,10 +101,10 @@ function initTocbot() {
 function changeTocScrollability() {
   // ウィンドウの縦幅よりもToCが大きければスクロール可能にする
   const offset = 128;
-  let windowHeight = window.innerHeight - offset;
-  let nav = document.getElementById(TOC_ID);
-  let ol = document.querySelector(`#${TOC_ID} > ol`);
-  if (windowHeight < ol.clientHeight) {
+  const windowHeight = window.innerHeight - offset;
+  const nav = document.getElementById(TOC_ID);
+  const ol = document.querySelector(`#${TOC_ID} > ol`) as HTMLElement | null;
+  if (nav && ol && windowHeight < ol.clientHeight) {
     nav.style.overflowY = "auto";
   }
 }
@@ -120,12 +125,13 @@ function mainProcess() {
 
 function updateLayout() {
   const articleBodies = document.getElementsByClassName("p-article__body");
-  const isNotArticlePage = articleBodies.length == 0;
-  if (isNotArticlePage) return null;
+  const isNotArticlePage = articleBodies.length === 0;
+  if (isNotArticlePage) return;
 
   const body = document.getElementsByTagName("body")[0];
   const hasBodyEnoughWidth = body.clientWidth > 921;
-  let toc = document.getElementById(TOC_ID);
+  const toc = document.getElementById(TOC_ID);
+  if (!toc) return;
   if (hasBodyEnoughWidth) {
     toc.hidden = false;
     changeLayout();
@@ -139,11 +145,13 @@ export function setupToc() {
 
   // ページ遷移がDOMの変化として行われるため、DOMの変化を検知して再実行する
   const target = document.getElementById("__nuxt");
-  const observer = new MutationObserver(mainProcess);
-  observer.observe(target, { subtree: true, childList: true });
+  if (target) {
+    const observer = new MutationObserver(mainProcess);
+    observer.observe(target, { subtree: true, childList: true });
+  }
 
   // ウィンドウのリサイズに応じてnote側のレイアウトが変わるので対応する
   const body = document.getElementsByTagName("body")[0];
   const resizeObserver = new ResizeObserver(updateLayout);
-  resizeObserver.observe(body, { subtree: true, childList: true });
+  resizeObserver.observe(body);
 }
