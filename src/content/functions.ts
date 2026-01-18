@@ -1,3 +1,4 @@
+import tocbot from "tocbot";
 const TOC_ID = "js-toc";
 
 function changeLayout() {
@@ -11,7 +12,8 @@ function changeLayout() {
     articleBody.style.marginRight = `${marginRightPx + padding}px`;
 
     const body = document.getElementsByTagName("body")[0];
-    const articleWidth = body.clientWidth - marginLeftPx - marginRightPx - padding * 2;
+    const articleWidth =
+      body.clientWidth - marginLeftPx - marginRightPx - padding * 2;
     articleBody.style.width = `${articleWidth}px`;
   }
 
@@ -35,7 +37,9 @@ function calcMarginRight() {
 
 function calcMarginLeft() {
   // articleの左側の余白は筆者のプロフィール欄に合わせる
-  const sideInfo = document.getElementsByClassName("p-article__sideCreatorInfo")[0];
+  const sideInfo = document.getElementsByClassName(
+    "p-article__sideCreatorInfo",
+  )[0];
   const minMargin = 100;
   return Math.max(sideInfo.clientWidth, minMargin);
 }
@@ -130,7 +134,7 @@ function updateLayout() {
   }
 }
 
-function main() {
+export function setupToc() {
   mainProcess();
 
   // ページ遷移がDOMの変化として行われるため、DOMの変化を検知して再実行する
@@ -143,5 +147,3 @@ function main() {
   const resizeObserver = new ResizeObserver(updateLayout);
   resizeObserver.observe(body, { subtree: true, childList: true });
 }
-
-main();
