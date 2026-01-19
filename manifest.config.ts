@@ -16,7 +16,7 @@ export default defineManifest({
   //   },
   //   default_popup: "src/popup/index.html",
   // },
-  permissions: ["sidePanel", "contentSettings"],
+  permissions: ["contentSettings"],
   content_scripts: [
     {
       js: ["src/content/main.tsx"],
@@ -24,7 +24,4 @@ export default defineManifest({
       run_at: "document_end",
     },
   ],
-  side_panel: {
-    default_path: "src/sidepanel/index.html",
-  },
 });

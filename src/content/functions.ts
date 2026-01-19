@@ -3,9 +3,9 @@ const TOC_ID = "js-toc";
 
 function changeLayout() {
   // 記事の幅を広げ、左右にマージンをとる
-  const articleBody = document.getElementsByClassName(
-    "p-article__body",
-  )[0] as HTMLElement | undefined;
+  const articleBody = document.getElementsByClassName("p-article__body")[0] as
+    | HTMLElement
+    | undefined;
   if (articleBody) {
     const padding = 48;
     const marginLeftPx = calcMarginLeft();
@@ -20,9 +20,9 @@ function changeLayout() {
   }
 
   // ヘッダー画像はもとのサイズのままにする
-  const figure = document.getElementsByClassName(
-    "o-noteEyecatch",
-  )[0] as HTMLElement | undefined;
+  const figure = document.getElementsByClassName("o-noteEyecatch")[0] as
+    | HTMLElement
+    | undefined;
   if (figure) {
     figure.style.width = "620px";
     figure.style.marginLeft = "auto";
