@@ -1,5 +1,5 @@
-# note-toc
+# note目次追加
 
-note.comの幅を広げてtocを追加するChrome拡張
+ブログサイト note.com の右側に目次を追加して記事を読みやすくするGoogle Chrome拡張機能です。
 
-[note toc - Chrome ウェブストア](https://chrome.google.com/webstore/detail/note-toc/dddpojfjpcidbebhjijlchdkfmegoidg?hl=ja)
+[note 目次追加 - Chrome ウェブストア](https://chrome.google.com/webstore/detail/note-toc/dddpojfjpcidbebhjijlchdkfmegoidg?hl=ja)
