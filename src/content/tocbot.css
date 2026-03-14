@@ -41,8 +41,8 @@ a.toc-link:hover {
   opacity: 0.6;
 }
 .toc-link::before {
-  background-color: #eee;
-  content: " ";
+  /* background-color: #eee;
+  content: " "; */
   display: inline-block;
   height: inherit;
   left: 0;
