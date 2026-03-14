@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NUXT_ROOT_ID, SELECTORS } from "./constants";
+import { DEFAULT_SETTINGS, Settings, getSettings } from "../shared/settings";
 
 const BREAKPOINT_WIDTH = 921;
 
@@ -51,4 +52,28 @@ export function useResponsiveVisibility(): boolean {
   }, []);
 
   return isHidden;
+}
+
+export function useSettings(): Settings {
+  const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
+
+  useEffect(() => {
+    getSettings().then(setSettings);
+
+    const listener = (changes: {
+      [key: string]: chrome.storage.StorageChange;
+    }) => {
+      setSettings((prev) => ({
+        ...prev,
+        ...Object.fromEntries(
+          Object.entries(changes).map(([k, v]) => [k, v.newValue]),
+        ),
+      }));
+    };
+
+    chrome.storage.sync.onChanged.addListener(listener);
+    return () => chrome.storage.sync.onChanged.removeListener(listener);
+  }, []);
+
+  return settings;
 }
