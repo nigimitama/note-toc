@@ -3,13 +3,14 @@ import pkg from "./package.json";
 
 export default defineManifest({
   manifest_version: 3,
-  name: pkg.name,
+  name: "note目次追加",
   description: "note.comの記事の右側に目次を追加します。",
   version: pkg.version,
   icons: {
     48: "public/icon48.png",
   },
-  permissions: ["contentSettings"],
+  permissions: ["storage"],
+  options_page: "src/options/index.html",
   content_scripts: [
     {
       js: ["src/content/main.tsx"],
