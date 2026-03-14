@@ -27,8 +27,8 @@ export default function App() {
           onClick={() => setIsTocCollapsed((v) => !v)}
           style={{
             position: "fixed",
-            top: "96px",
-            right: "2em",
+            top: "80px",
+            right: "1em",
             zIndex: 1000,
             background: "white",
             border: "1px solid #ccc",
