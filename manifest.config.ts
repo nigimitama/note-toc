@@ -9,13 +9,6 @@ export default defineManifest({
   icons: {
     48: "public/icon48.png",
   },
-  // action: {
-  //   default_icon: {
-  //     16: "public/icon16.png",
-  //     48: "public/icon48.png",
-  //   },
-  //   default_popup: "src/popup/index.html",
-  // },
   permissions: ["contentSettings"],
   content_scripts: [
     {
