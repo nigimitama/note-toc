@@ -4,7 +4,6 @@ import { TOC_ID } from "../constants";
 import { useArticlePageDetection, useResponsiveVisibility } from "../hooks";
 import {
   addIdsToHeadings,
-  changeLayout,
   changeTocScrollability,
   markArticleContent,
 } from "../layout";
@@ -29,21 +28,14 @@ export default function TocNav() {
     });
 
     changeTocScrollability();
-    changeLayout();
 
     return () => {
       tocbot.destroy();
     };
   }, [isArticlePage]);
 
-  useEffect(() => {
-    if (isArticlePage && !isHidden) {
-      changeLayout();
-    }
-  }, [isHidden, isArticlePage]);
-
   if (!isArticlePage) {
-    return null;
+    return <></>;
   }
 
   return (
