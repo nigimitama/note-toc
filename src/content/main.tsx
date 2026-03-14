@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./views/App";
-import "./style.css";
 import "./tocbot.css";
 
 const container = document.createElement("div");

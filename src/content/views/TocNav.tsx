@@ -8,7 +8,11 @@ import {
   markArticleContent,
 } from "../layout";
 
-export default function TocNav() {
+interface TocNavProps {
+  collapsed: boolean;
+}
+
+export default function TocNav({ collapsed }: TocNavProps) {
   const isArticlePage = useArticlePageDetection();
   const isHidden = useResponsiveVisibility();
 
@@ -38,11 +42,28 @@ export default function TocNav() {
     return <></>;
   }
 
+  const collapseStyle: React.CSSProperties = {
+    transformOrigin: collapsed ? "top right" : "top right",
+    transform: collapsed ? "scale(0)" : "scale(1)",
+    opacity: collapsed ? 0 : 1,
+    transition: "transform 0.4s ease, opacity 0.4s ease",
+    pointerEvents: collapsed ? "none" : "auto",
+  };
+
   return (
     <nav
       id={TOC_ID}
       className={TOC_ID}
-      style={{ right: "2em" }}
+      style={{
+        float: "right",
+        width: "20%",
+        position: "fixed",
+        padding: "1em",
+        top: "94px",
+        right: "1em",
+        marginLeft: "auto" /* 右寄せにする */,
+        ...collapseStyle,
+      }}
       hidden={isHidden}
     />
   );
