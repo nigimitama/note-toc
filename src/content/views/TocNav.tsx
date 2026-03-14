@@ -20,7 +20,9 @@ const Nav = styled.nav<{ $collapsed: boolean }>`
   transform-origin: top right;
   transform: ${({ $collapsed }) => ($collapsed ? "scale(0)" : "scale(1)")};
   opacity: ${({ $collapsed }) => ($collapsed ? 0 : 1)};
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
   pointer-events: ${({ $collapsed }) => ($collapsed ? "none" : "auto")};
 `;
 
