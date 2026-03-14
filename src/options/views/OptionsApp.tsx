@@ -71,7 +71,7 @@ export default function OptionsApp() {
         <SettingInfo>
           <SettingLabel>記事の幅を広げる</SettingLabel>
           <SettingDescription>
-            記事レイアウトを広げて目次が重ならないようにします
+            記事の横幅を広げ、長い記事を読みやすくします。
           </SettingDescription>
         </SettingInfo>
         <Toggle
