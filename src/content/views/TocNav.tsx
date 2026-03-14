@@ -49,7 +49,8 @@ export default function TocNav() {
   return (
     <nav
       id={TOC_ID}
-      className={`${TOC_ID} float-right w-1/5 fixed p-4 top-[124px] right-[2em] ml-auto`}
+      className={TOC_ID}
+      style={{ right: "2em" }}
       hidden={isHidden}
     />
   );
